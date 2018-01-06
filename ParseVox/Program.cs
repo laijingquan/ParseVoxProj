@@ -11,12 +11,20 @@ namespace ParseVox
 {
     class Program
     {
+        static string datapath;
+        static string jsonpath;
         static void Main(string[] args)
         {
-            string path = "C:/Users/李剑峰/Source/Repos/ParseVox/ParseVox/chr_rain.vox";
+            string curDir = System.Environment.CurrentDirectory;
+            var binDir = curDir.Substring(0, curDir.LastIndexOf("\\"));
+            var slnDir = binDir.Substring(0, binDir.LastIndexOf("\\"));
+            var dataDir = slnDir + "\\Data";
+            var jsonDir = slnDir + "\\Json";
+            datapath = dataDir+"\\menger.vox";
+            jsonpath = jsonDir + "\\menger.json";
             List<byte> readBytes = new List<byte>();
 
-            var fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+            var fs = new FileStream(datapath, FileMode.Open, FileAccess.Read);
             var br = new BinaryReader(fs);
             var voxBytes = br.ReadBytes(4);
             string vox = Encoding.UTF8.GetString(voxBytes);
@@ -83,7 +91,7 @@ namespace ParseVox
 
             string json = JsonConvert.SerializeObject(md,Formatting.Indented);
 
-            SaveJsonToFile("C:/Users/李剑峰/Source/Repos/ParseVox/ParseVox/chr_rain.json", json);
+            SaveJsonToFile(jsonpath, json);
         }
 
         static void SaveJsonToFile(string despath, string json)

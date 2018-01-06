@@ -1,9 +1,0 @@
-C:\Users\李剑峰\Source\Repos\ParseVox\ParseVox\bin\Debug\ParseVox.exe.config
-C:\Users\李剑峰\Source\Repos\ParseVox\ParseVox\bin\Debug\ParseVox.exe
-C:\Users\李剑峰\Source\Repos\ParseVox\ParseVox\bin\Debug\ParseVox.pdb
-C:\Users\李剑峰\Source\Repos\ParseVox\ParseVox\obj\Debug\ParseVox.csprojResolveAssemblyReference.cache
-C:\Users\李剑峰\Source\Repos\ParseVox\ParseVox\obj\Debug\ParseVox.csproj.CoreCompileInputs.cache
-C:\Users\李剑峰\Source\Repos\ParseVox\ParseVox\obj\Debug\ParseVox.exe
-C:\Users\李剑峰\Source\Repos\ParseVox\ParseVox\obj\Debug\ParseVox.pdb
-C:\Users\李剑峰\Source\Repos\ParseVox\ParseVox\bin\Debug\Newtonsoft.Json.dll
-C:\Users\李剑峰\Source\Repos\ParseVox\ParseVox\bin\Debug\Newtonsoft.Json.xml
