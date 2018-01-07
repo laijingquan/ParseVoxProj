@@ -11,8 +11,17 @@ namespace ParseVox
         public int colorIndex;
     }
 
+    public class RGBA
+    {
+        public int r;
+        public int g;
+        public int b;
+        public int a;
+    }
+
     public class MainData
     {
         public List<VoxData> voxDatas = new List<VoxData>();
+        public List<RGBA> rgbas = new List<RGBA>();
     }
 }

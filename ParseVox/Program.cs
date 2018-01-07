@@ -13,6 +13,7 @@ namespace ParseVox
     {
         static string datapath;
         static string jsonpath;
+        static MainData MD;
         static void Main(string[] args)
         {
             string curDir = System.Environment.CurrentDirectory;
@@ -20,8 +21,8 @@ namespace ParseVox
             var slnDir = binDir.Substring(0, binDir.LastIndexOf("\\"));
             var dataDir = slnDir + "\\Data";
             var jsonDir = slnDir + "\\Json";
-            datapath = dataDir+"\\menger.vox";
-            jsonpath = jsonDir + "\\menger.json";
+            datapath = dataDir+"\\castle.vox";
+            jsonpath = jsonDir + "\\castle.json";
             List<byte> readBytes = new List<byte>();
 
             var fs = new FileStream(datapath, FileMode.Open, FileAccess.Read);
@@ -40,6 +41,7 @@ namespace ParseVox
             int size = 0;
             size = mainChildCount;//子Chunk的内容大小
 
+            MD = new MainData();
             //read child Chunk
             while (offset < size)
             {
@@ -50,6 +52,9 @@ namespace ParseVox
                 {
                     case "XYZI":
                         ParseXYZI(br, childChunkSize);
+                        break;
+                    case "RGBA":
+                        ParseRGBA(br, childChunkSize);
                         break;
                     default:
                         var content = br.ReadBytes(childChunkSize);
@@ -65,16 +70,30 @@ namespace ParseVox
                 }
                 offset += childChunkSize + 12;
             }
+
+            string json = JsonConvert.SerializeObject(MD,Formatting.Indented);
+
+            SaveJsonToFile(jsonpath, json);
         }
 
-        static void TestJson()
+        static void ParseRGBA(BinaryReader br, int readsize)
         {
+            while (readsize > 0)
+            {
+                var c = br.ReadBytes(4);
+                var r = c[0];
+                var g = c[1];
+                var b = c[2];
+                var a = c[3];
+                readsize -= 4;
 
+                MD.rgbas.Add(new RGBA() { r = r, g = g, b = b, a = a });
+            }
         }
 
         static void ParseXYZI(BinaryReader br, int readsize)
         {
-            var md = new MainData();
+            //var md = new MainData();
             var numVoexls = BitConverter.ToInt32(br.ReadBytes(4), 0);
             readsize -= 4;
             while (readsize > 0)
@@ -86,12 +105,12 @@ namespace ParseVox
                 var colorIndex = c[3];
                 readsize -= 4;
 
-                md.voxDatas.Add(new VoxData() { x = x, y = y, z = z, colorIndex = colorIndex });
+                MD.voxDatas.Add(new VoxData() { x = x, y = y, z = z, colorIndex = colorIndex });
             }
 
-            string json = JsonConvert.SerializeObject(md,Formatting.Indented);
+            //string json = JsonConvert.SerializeObject(md,Formatting.Indented);
 
-            SaveJsonToFile(jsonpath, json);
+            //SaveJsonToFile(jsonpath, json);
         }
 
         static void SaveJsonToFile(string despath, string json)
